@@ -1,86 +1,106 @@
-import React, { Component } from 'react'
-import { ScrollView, StyleSheet, View } from 'react-native'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import { addSurveyData } from '../../redux/actions'
+import { addSurveyData } from '../../redux/actions';
 
-import globalStyles from '../../globalStyles'
-import Button from '../../components/Button'
-import Select from '../../components/Select'
-import TextInput from '../../components/TextInput'
+import globalStyles from '../../globalStyles';
+import Button from '../../components/Button';
+import Select from '../../components/Select';
+import TextInput from '../../components/TextInput';
 
 export class FamilyMembersNames extends Component {
-  draft_id = this.props.navigation.getParam('draft_id')
-  survey = this.props.navigation.getParam('survey')
+  draft_id = this.props.navigation.getParam('draft_id');
+  survey = this.props.navigation.getParam('survey');
 
-  state = { errorsDetected: [] }
+  state = { errorsDetected: [] };
 
   handleClick(draft) {
     this.getFieldValue(draft, 'count_family_members') > 1
       ? this.props.navigation.navigate('FamilyMembersGender', {
           draft_id: this.draft_id,
-          survey: this.survey
+          survey: this.survey,
         })
       : this.props.navigation.navigate('Location', {
           draft_id: this.draft_id,
-          survey: this.survey
-        })
+          survey: this.survey,
+        });
   }
   getFieldValue = (draft, field) => {
     if (!draft) {
-      return
+      return;
     }
-    return draft.family_data[field]
-  }
+    return draft.family_data[field];
+  };
   detectError = (error, field) => {
     if (error && !this.state.errorsDetected.includes(field)) {
-      this.setState({ errorsDetected: [...this.state.errorsDetected, field] })
+      this.setState({ errorsDetected: [...this.state.errorsDetected, field] });
     } else if (!error) {
       this.setState({
-        errorsDetected: this.state.errorsDetected.filter(item => item !== field)
-      })
+        errorsDetected: this.state.errorsDetected.filter(
+          item => item !== field,
+        ),
+      });
     }
-  }
+  };
 
   addFamilyCount = (text, field) => {
     this.props.addSurveyData(this.draft_id, 'family_data', {
-      [field]: text
-    })
+      [field]: text,
+    });
 
-    this.addFamilyMemberArray(text)
-  }
+    this.addFamilyMemberArray(text, this.draft_id);
+  };
 
-  addFamilyMemberArray = count => {
-    let familyMembersList = []
+  addFamilyMemberArray = (count, draft_id) => {
+    let draft_idx = this.props.drafts.map(e => e.draft_id).indexOf(draft_id);
+    let familyMembersList = [];
+    let numberOfFamilyMembers = this.props.drafts[draft_idx].family_data
+      .familyMembersList.length;
 
-    for (let i = 0; i < Number(count) - 1; i++) {
-      familyMembersList.push({ firstName: '' })
+    if (numberOfFamilyMembers >= Number(count) - 1) {
+      numberOfExtraFamilyMembers = numberOfFamilyMembers - Number(count) - 1;
+      familyMembersList = this.props.drafts[
+        draft_idx
+      ].family_data.familyMembersList.slice(
+        0,
+        numberOfFamilyMembers - numberOfExtraFamilyMembers - 2,
+      );
+    } else {
+      numberOfNewFamilyMembers = Number(count) - 1 - numberOfFamilyMembers;
+      this.props.drafts[draft_idx].family_data.familyMembersList.forEach(
+        member => {
+          familyMembersList.push(member);
+        },
+      );
+      for (let i = 0; i < numberOfNewFamilyMembers; i++) {
+        familyMembersList.push({ firstName: '' });
+      }
     }
-
     this.props.addSurveyData(this.draft_id, 'family_data', {
-      familyMembersList: familyMembersList
-    })
-  }
+      familyMembersList: familyMembersList,
+    });
+  };
 
   addFamilyMemberName(name, list, i) {
-    list[i].firstName = name
+    list[i].firstName = name;
     this.props.addSurveyData(this.draft_id, 'family_data', {
-      familyMembersList: list
-    })
+      familyMembersList: list,
+    });
   }
 
   render() {
     const draft = this.props.drafts.filter(
-      draft => draft.draft_id === this.draft_id
-    )[0]
+      draft => draft.draft_id === this.draft_id,
+    )[0];
 
     const emptyRequiredFields =
       draft.family_data.familyMembersList.filter(item => item.firstName === '')
-        .length !== 0 || !draft.family_data.count_family_members
+        .length !== 0 || !draft.family_data.count_family_members;
 
     const isButtonEnabled =
-      !emptyRequiredFields && !this.state.errorsDetected.length
+      !emptyRequiredFields && !this.state.errorsDetected.length;
 
     return (
       <ScrollView
@@ -108,7 +128,7 @@ export class FamilyMembersNames extends Component {
               { text: '7', value: '7' },
               { text: '8', value: '8' },
               { text: '9', value: '9' },
-              { text: '10', value: '10' }
+              { text: '10', value: '10' },
             ]}
           />
           <TextInput
@@ -130,7 +150,7 @@ export class FamilyMembersNames extends Component {
                 this.addFamilyMemberName(
                   text,
                   draft.family_data.familyMembersList,
-                  i
+                  i,
                 )
               }
               placeholder="Name"
@@ -153,32 +173,32 @@ export class FamilyMembersNames extends Component {
           />
         </View>
       </ScrollView>
-    )
+    );
   }
 }
 const styles = StyleSheet.create({
   contentContainer: {
     flexGrow: 1,
     flexDirection: 'column',
-    justifyContent: 'space-between'
-  }
-})
+    justifyContent: 'space-between',
+  },
+});
 
 FamilyMembersNames.propTypes = {
   drafts: PropTypes.array,
   navigation: PropTypes.object.isRequired,
-  addSurveyData: PropTypes.func.isRequired
-}
+  addSurveyData: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = {
-  addSurveyData
-}
+  addSurveyData,
+};
 
 const mapStateToProps = ({ drafts }) => ({
-  drafts
-})
+  drafts,
+});
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
-)(FamilyMembersNames)
+  mapDispatchToProps,
+)(FamilyMembersNames);
