@@ -118,7 +118,7 @@ describe('FamilyMembersNames View', () => {
   //
   //   wrapper
   //     .find(Select)
-  //     .onChange
+  //     .simulate('change',{target: {value:'3'}})
   //   console.log(wrapper.find(TextInput))
   //   expect(spy).toHaveBeenCalledTimes(1)
   //
