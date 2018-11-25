@@ -57,8 +57,11 @@ export class FamilyMembersNames extends Component {
     let numberOfFamilyMembers = this.props.drafts[draft_idx].family_data
       .familyMembersList.length
 
+    // If the existing number of family members in the state
+    // is greater or equal to the selected number of family members
+    // slice the last n family members from the array
     if (numberOfFamilyMembers >= Number(count) - 1) {
-      numberOfExtraFamilyMembers = numberOfFamilyMembers - Number(count) - 1
+      let numberOfExtraFamilyMembers = numberOfFamilyMembers - Number(count) - 1
       familyMembersList = this.props.drafts[
         draft_idx
       ].family_data.familyMembersList.slice(
@@ -66,12 +69,15 @@ export class FamilyMembersNames extends Component {
         numberOfFamilyMembers - numberOfExtraFamilyMembers - 2
       )
     } else {
-      numberOfNewFamilyMembers = Number(count) - 1 - numberOfFamilyMembers
+      // else add copy the existing family members array into the familyMembersList
+      // Then add firstname="" for all the new family members
+      let numberOfNewFamilyMembers = Number(count) - 1 - numberOfFamilyMembers
       this.props.drafts[draft_idx].family_data.familyMembersList.forEach(
         member => {
           familyMembersList.push(member)
         }
       )
+
       for (let i = 0; i < numberOfNewFamilyMembers; i++) {
         familyMembersList.push({ firstName: '' })
       }

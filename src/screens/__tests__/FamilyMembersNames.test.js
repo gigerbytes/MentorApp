@@ -113,6 +113,22 @@ describe('FamilyMembersNames View', () => {
     expect(spy).toHaveBeenCalledTimes(1)
   })
 
+  // it('retains Family Member Name on count Update', () => {
+  //   const spy = jest.spyOn(wrapper.instance(), 'addFamilyMemberArray')
+  //
+  //   wrapper
+  //     .find(Select)
+  //     .onChange
+  //   console.log(wrapper.find(TextInput))
+  //   expect(spy).toHaveBeenCalledTimes(1)
+  //
+  //   expect(wrapper.find(TextInput).at(0).props().value).toBe('Jane')
+  //   expect(wrapper.find(TextInput).at(1).props().value).toBe('Demo')
+  //   expect(wrapper.find(TextInput).last().props().value).toBe('')
+  //
+  //
+  // })
+
   it('enables Button when all fields are filled', () => {
     expect(
       wrapper
