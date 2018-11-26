@@ -48,63 +48,16 @@ export class FamilyMembersNames extends Component {
     this.props.addSurveyData(this.draftId, 'familyData', {
       [field]: text
     })
-// <<<<<<< bug/issue-66
-
-    this.addFamilyMemberArray(text, this.draft_id)
   }
 
-  addFamilyMemberArray = (count, draft_id) => {
-    let draft_idx = this.props.drafts.map(e => e.draft_id).indexOf(draft_id)
-    let familyMembersList = []
-    let numberOfFamilyMembers = this.props.drafts[draft_idx].family_data
-      .familyMembersList.length
-
-    // If the existing number of family members in the state
-    // is greater or equal to the selected number of family members
-    // slice the last n family members from the array
-    if (numberOfFamilyMembers >= Number(count) - 1) {
-      let numberOfExtraFamilyMembers = numberOfFamilyMembers - Number(count) - 1
-      familyMembersList = this.props.drafts[
-        draft_idx
-      ].family_data.familyMembersList.slice(
-        0,
-        numberOfFamilyMembers - numberOfExtraFamilyMembers - 2
-      )
-    } else {
-      // else add copy the existing family members array into the familyMembersList
-      // Then add firstname="" for all the new family members
-      let numberOfNewFamilyMembers = Number(count) - 1 - numberOfFamilyMembers
-      this.props.drafts[draft_idx].family_data.familyMembersList.forEach(
-        member => {
-          familyMembersList.push(member)
-        }
-      )
-
-      for (let i = 0; i < numberOfNewFamilyMembers; i++) {
-        familyMembersList.push({ firstName: '' })
+  addFamilyMemberName(name, index) {
+    this.props.addSurveyFamilyMemberData({
+      id: this.draftId,
+      index,
+      payload: {
+        firstName: name
       }
-    }
-    this.props.addSurveyData(this.draft_id, 'family_data', {
-      familyMembersList: familyMembersList
     })
-  }
-
-  addFamilyMemberName(name, list, i) {
-    list[i].firstName = name
-    this.props.addSurveyData(this.draft_id, 'family_data', {
-      familyMembersList: list
-// =======
-//   }
-
-//   addFamilyMemberName(name, index) {
-//     this.props.addSurveyFamilyMemberData({
-//       id: this.draftId,
-//       index,
-//       payload: {
-//         firstName: name
-//       }
-// >>>>>>> bug/issue-66
-//     })
   }
 
   render() {
