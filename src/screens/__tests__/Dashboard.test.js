@@ -21,10 +21,10 @@ const createTestProps = props => ({
   t: jest.fn(),
   drafts: [
     {
-      draft_id: 1
+      draftId: 1
     },
     {
-      draft_id: 2
+      draftId: 2
     }
   ],
   ...props

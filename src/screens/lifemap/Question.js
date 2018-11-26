@@ -18,14 +18,14 @@ import Checkbox from '../../components/Checkbox'
 export class Question extends Component {
   step = this.props.navigation.getParam('step')
   survey = this.props.navigation.getParam('survey')
-  draft_id = this.props.navigation.getParam('draft_id')
+  draftId = this.props.navigation.getParam('draftId')
 
   indicators = this.survey.surveyStoplightQuestions
   indicator = this.indicators[this.step]
   slides = this.indicator.stoplightColors
 
   selectAnswer(answer) {
-    this.props.addSurveyData(this.draft_id, 'indicator_survey_data', {
+    this.props.addSurveyData(this.draftId, 'indicatorSurveyDataList', {
       [this.indicator.questionText]: answer
     })
 
@@ -34,13 +34,13 @@ export class Question extends Component {
       !this.props.navigation.getParam('skipped')
     ) {
       this.props.navigation.push('Question', {
-        draft_id: this.draft_id,
+        draftId: this.draftId,
         survey: this.survey,
         step: this.step + 1
       })
     } else
       this.props.navigation.navigate('Final', {
-        draft_id: this.draft_id,
+        draftId: this.draftId,
         survey: this.survey
       })
   }
@@ -95,9 +95,7 @@ Question.propTypes = {
   navigation: PropTypes.object.isRequired
 }
 
-const mapStateToProps = ({ drafts }) => ({
-  drafts
-})
+const mapStateToProps = () => ({})
 
 const mapDispatchToProps = {
   addSurveyData

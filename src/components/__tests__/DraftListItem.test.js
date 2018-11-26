@@ -8,10 +8,49 @@ import DraftListItem from '../DraftListItem'
 const createTestProps = props => ({
   handleClick: jest.fn(),
   item: {
-    draft_id: 1,
-    personal_survey_data: {
-      firstName: 'Firstname',
-      lastName: 'Lastname'
+    draftId: 1,
+    familyData: {
+      countFamilyMembers: 1,
+      longitude: -25.8976,
+      latitude: -22.2521,
+      familyIdentifier: 'ASD323', //uuid
+      address: 'SOME ADDRESS',
+      postalCode: '1000',
+      accuracy: 100, //number
+      familyMembersList: [
+        {
+          firstName: 'Juan', //mandatory
+          lastName: 'Perez', //mandatory
+          documentNumber: '123456',
+          email: 'juan@gmail.com',
+          birthCountry: 'Paraguay',
+          gender: 'F',
+          birthDate: 12345,
+          primary: true,
+          socioEconomicAnswers: [
+            { key: 'educationPersonMostStudied', value: 'SCHOOL-COMPLETE' },
+            { key: 'receiveStateIncome', value: 'NO' }
+          ]
+        },
+        {
+          firstName: 'Ana', //mandatory
+          lastName: 'Perez',
+          documentNumber: '123456',
+          email: 'juan@gmail.com',
+          birthCountry: 'Paraguay',
+          gender: 'F',
+          birthDate: 12345,
+          primary: false,
+          socioEconomicAnswers: [
+            {
+              key: 'familyUbication',
+              value: '54.98584496333538,-1.5724916942463096'
+            },
+            { key: 'educationPersonMostStudied', value: 'SCHOOL-COMPLETE' },
+            { key: 'receiveStateIncome', value: 'NO' }
+          ]
+        }
+      ]
     },
     created: 1539971763946
   },
@@ -53,7 +92,7 @@ describe('DraftListItem Component', () => {
           .find(Text)
           .last()
           .props().children
-      ).toEqual(['Firstname', ' ', 'Lastname'])
+      ).toEqual(['Juan', ' ', 'Perez'])
     })
   })
   describe('functionality', () => {

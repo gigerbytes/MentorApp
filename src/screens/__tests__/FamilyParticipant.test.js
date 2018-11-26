@@ -6,34 +6,16 @@ import Select from '../../components/Select'
 import DateInput from '../../components/DateInput'
 import Button from '../../components/Button'
 import TextInput from '../../components/TextInput'
+import draft from '../__mocks__/draftMock.json'
 
 const createTestProps = props => ({
   createDraft: jest.fn(),
-  addSurveyData: jest.fn(),
+  addSurveyFamilyMemberData: jest.fn(),
   navigation: {
     navigate: jest.fn(),
     getParam: param => (param === 'draft' ? null : 1)
   },
-  drafts: [
-    {
-      draft_id: 4,
-      survey_id: 1,
-      personal_survey_data: {
-        firstName: 'Jane',
-        lastName: 'Doe',
-        documentNumber: '5468568',
-        email: 'jane@doe.com',
-        phone: '40965035',
-        gender: 'F'
-      },
-      economic_survey_data: {
-        familyCar: 'Yes'
-      },
-      indicator_survey_data: {
-        income: 'GREEN'
-      }
-    }
-  ],
+  drafts: [draft],
   surveys: [
     {
       id: 1,
@@ -97,14 +79,14 @@ describe('Family Participant View', () => {
 
   describe('lifecycle', () => {
     describe('no saved draft', () => {
-      it('creates universally unique draft identifier if there is no draft_id', () => {
-        expect(wrapper.instance().draft_id).toEqual(
+      it('creates universally unique draft identifier if there is no draftId', () => {
+        expect(wrapper.instance().draftId).toEqual(
           expect.stringMatching(/[a-z0-9_.-].*/)
         )
       })
 
-      it('sets proper survey_id when there is no draft', () => {
-        expect(wrapper.instance().survey_id).toBe(1)
+      it('sets proper surveyId when there is no draft', () => {
+        expect(wrapper.instance().surveyId).toBe(1)
       })
 
       it('sets survey with surveyPersonalQuestions', () => {
@@ -132,12 +114,12 @@ describe('Family Participant View', () => {
         wrapper = shallow(<FamilyParticipant {...props} />)
       })
 
-      it('sets draft_id', () => {
-        expect(wrapper.instance().draft_id).toBe(4)
+      it('sets draftId', () => {
+        expect(wrapper.instance().draftId).toBe(4)
       })
 
-      it('sets proper survey_id when there is a draft', () => {
-        expect(wrapper.instance().survey_id).toBe(1)
+      it('sets proper surveyId when there is a draft', () => {
+        expect(wrapper.instance().surveyId).toBe(1)
       })
 
       it('does not create a new draft on componentDidMount if such exists', () => {
@@ -178,36 +160,42 @@ describe('Family Participant View', () => {
           .find(TextInput)
           .first()
           .props().value
-      ).toBe('Jane')
+      ).toBe('Juan')
     })
   })
 
   describe('functionality', () => {
-    it('calls addSurveyData on input change', () => {
+    it('calls addSurveyFamilyMemberData on input change', () => {
       wrapper
         .find(TextInput)
         .first()
         .props()
         .onChangeText()
 
-      expect(wrapper.instance().props.addSurveyData).toHaveBeenCalledTimes(1)
+      expect(
+        wrapper.instance().props.addSurveyFamilyMemberData
+      ).toHaveBeenCalledTimes(1)
     })
-    it('calls addSurveyData on select change', () => {
+    it('calls addSurveyFamilyMemberData on select change', () => {
       wrapper
         .find(Select)
         .first()
         .props()
         .onChange()
 
-      expect(wrapper.instance().props.addSurveyData).toHaveBeenCalledTimes(1)
+      expect(
+        wrapper.instance().props.addSurveyFamilyMemberData
+      ).toHaveBeenCalledTimes(1)
     })
 
-    it('calls addSurveyData on valid date input', () => {
+    it('calls addSurveyFamilyMemberData on valid date input', () => {
       wrapper
         .find(DateInput)
         .props()
         .onValidDate('January 21 1999')
-      expect(wrapper.instance().props.addSurveyData).toHaveBeenCalledTimes(1)
+      expect(
+        wrapper.instance().props.addSurveyFamilyMemberData
+      ).toHaveBeenCalledTimes(1)
     })
 
     it('calls navigator function on pressing Continue button', () => {

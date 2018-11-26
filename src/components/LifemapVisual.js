@@ -5,8 +5,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import colors from '../theme.json'
 class LifemapVisual extends Component {
   getColors = () =>
-    Object.values(this.props.data).map(color => {
-      switch (color) {
+    this.props.data.map(item => {
+      switch (item.value) {
         case 1:
           return colors.red
         case 2:
@@ -39,7 +39,7 @@ class LifemapVisual extends Component {
 }
 
 LifemapVisual.propTypes = {
-  data: PropTypes.object.isRequired
+  data: PropTypes.array.isRequired
 }
 
 const styles = StyleSheet.create({

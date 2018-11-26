@@ -38,7 +38,10 @@ class Select extends Component {
     const { errorMsg } = this.state
     return (
       <View>
-        <Text style={this.props.value ? styles.label : styles.labelNoValue}>
+        <Text
+          numberOfLines={2}
+          style={this.props.value ? styles.label : styles.labelNoValue}
+        >
           {`${this.props.label} ${this.props.required ? '*' : ''}`}
         </Text>
         <View
@@ -91,7 +94,7 @@ Select.propTypes = {
   onChange: PropTypes.func.isRequired,
   data: PropTypes.array,
   label: PropTypes.string,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   placeholder: PropTypes.string.isRequired,
   field: PropTypes.string,
   countrySelect: PropTypes.bool,
@@ -118,7 +121,6 @@ const styles = StyleSheet.create({
   },
   label: {
     ...globalStyles.subline,
-
     paddingHorizontal: 25,
     marginTop: 25,
     marginBottom: -25,

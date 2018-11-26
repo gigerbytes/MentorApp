@@ -109,17 +109,17 @@ describe('snapshots reducer', () => {
 describe('drafts reducer', () => {
   const initialStore = [
     {
-      draft_id: 1,
+      draftId: 1,
       status: 'Success'
     },
     {
-      draft_id: 2,
+      draftId: 2,
       status: 'In progress'
     }
   ]
   it('should handle CREATE_DRAFT', () => {
     const payload = {
-      draft_id: 3
+      draftId: 3
     }
     expect(
       reducer.drafts(initialStore, {
@@ -131,11 +131,11 @@ describe('drafts reducer', () => {
   it('should handle SUBMIT_DRAFT', () => {
     const expectedStore = [
       {
-        draft_id: 1,
+        draftId: 1,
         status: 'Pending'
       },
       {
-        draft_id: 2,
+        draftId: 2,
         status: 'In progress'
       }
     ]
@@ -149,11 +149,11 @@ describe('drafts reducer', () => {
   it('should handle SUBMIT_DRAFT_COMMIT', () => {
     const expectedStore = [
       {
-        draft_id: 1,
+        draftId: 1,
         status: 'Success'
       },
       {
-        draft_id: 2,
+        draftId: 2,
         status: 'Success'
       }
     ]
@@ -167,11 +167,11 @@ describe('drafts reducer', () => {
   it('should handle SUBMIT_DRAFT_ROLLBACK', () => {
     const expectedStore = [
       {
-        draft_id: 1,
+        draftId: 1,
         status: 'Success'
       },
       {
-        draft_id: 2,
+        draftId: 2,
         status: 'Error'
       }
     ]
@@ -185,11 +185,11 @@ describe('drafts reducer', () => {
   it('should handle ADD_SURVEY_DATA', () => {
     const expectedStore = [
       {
-        draft_id: 1,
+        draftId: 1,
         status: 'Success'
       },
       {
-        draft_id: 2,
+        draftId: 2,
         personal_survey_data: { name: 'Name' },
         status: 'In progress'
       }
@@ -206,7 +206,7 @@ describe('drafts reducer', () => {
   it('should handle DELETE_DRAFT', () => {
     const expectedStore = [
       {
-        draft_id: 1,
+        draftId: 1,
         status: 'Success'
       }
     ]

@@ -35,7 +35,7 @@ export class BeginLifemap extends Component {
             text="Continue"
             handleClick={() =>
               this.props.navigation.navigate('Question', {
-                draft_id: this.props.navigation.getParam('draft_id'),
+                draftId: this.props.navigation.getParam('draftId'),
                 survey: this.survey,
                 step: 0
               })

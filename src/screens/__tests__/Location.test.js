@@ -26,16 +26,32 @@ global.fetch = () => new Promise(() => {})
 const createTestProps = props => ({
   navigation: {
     navigate: jest.fn(),
-    getParam: param => (param === 'draft_id' ? 2 : { survey_id: 100 })
+    getParam: param => (param === 'draftId' ? 2 : { surveyId: 100 })
   },
   addSurveyData: jest.fn(),
   drafts: [
     {
-      draft_id: 1
+      draftId: 1
     },
     {
-      draft_id: 2,
-      personal_survey_data: {}
+      draftId: 2,
+      surveyId: 1,
+      economicSurveyDataList: [],
+      indicatorSurveyDataList: [],
+      familyData: {
+        countFamilyMembers: 2,
+        familyMembersList: [
+          {
+            firstName: 'Juan',
+            lastName: 'Perez'
+          },
+          {
+            firstName: 'Ana',
+            gender: 'F',
+            birthDate: 1515708000
+          }
+        ]
+      }
     }
   ],
   ...props
@@ -99,9 +115,9 @@ describe('Family Location component', () => {
   })
   it('edits draft in field change', () => {
     wrapper
-      .find('#postcode')
+      .find('#postalCode')
       .props()
-      .onChangeText('123', 'postcode')
+      .onChangeText('123', 'postalCode')
 
     wrapper
       .find('#houseDescription')
@@ -129,15 +145,15 @@ describe('Family Location component', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
   })
-  it('navigates to BeginLifemap with proper params', () => {
+  it('navigates to SocioEconomicQuestion with proper params', () => {
     wrapper
       .find('#continue')
       .props()
       .handleClick()
 
     expect(wrapper.instance().props.navigation.navigate).toHaveBeenCalledWith(
-      'BeginLifemap',
-      { draft_id: 2, survey: { survey_id: 100 } }
+      'SocioEconomicQuestion',
+      { draftId: 2, survey: { surveyId: 100 } }
     )
   })
   it('detects errors', () => {

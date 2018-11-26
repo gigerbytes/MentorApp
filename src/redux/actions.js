@@ -63,7 +63,7 @@ export const loadSurveys = (env, token) => ({
         headers: { Authorization: `Bearer ${token}` },
         body: JSON.stringify({
           query:
-            'query { surveysByUser { title id surveyPersonalQuestions { id questionText answerType options { text value  } } surveyEconomicQuestions { questionText answerType topic required forFamilyMember options {text value} } surveyStoplightQuestions { questionText dimension id stoplightColors { url value description } required } } }'
+            'query { surveysByUser { title id surveyPersonalQuestions { id questionText answerType options { text value  } } surveyEconomicQuestions { questionText codeName answerType topic required forFamilyMember options {text value} } surveyStoplightQuestions { questionText dimension id stoplightColors { url value description } required } } }'
         })
       },
       commit: { type: LOAD_SURVEYS }
@@ -96,6 +96,7 @@ export const loadFamilies = (env, token) => ({
 export const CREATE_DRAFT = 'CREATE_DRAFT'
 export const DELETE_DRAFT = 'DELETE_DRAFT'
 export const ADD_SURVEY_DATA = 'ADD_SURVEY_DATA'
+export const ADD_SURVEY_FAMILY_MEMBER_DATA = 'ADD_SURVEY_FAMILY_MEMBER_DATA'
 export const SUBMIT_DRAFT = 'SUBMIT_DRAFT'
 export const SUBMIT_DRAFT_COMMIT = 'SUBMIT_DRAFT_COMMIT'
 export const SUBMIT_DRAFT_ROLLBACK = 'SUBMIT_DRAFT_ROLLBACK'
@@ -108,6 +109,19 @@ export const createDraft = payload => ({
 export const deleteDraft = id => ({
   type: DELETE_DRAFT,
   id
+})
+
+export const addSurveyFamilyMemberData = ({
+  id,
+  index,
+  payload,
+  isSocioEconomicAnswer
+}) => ({
+  type: ADD_SURVEY_FAMILY_MEMBER_DATA,
+  id,
+  index,
+  isSocioEconomicAnswer,
+  payload
 })
 
 export const addSurveyData = (id, category, payload) => ({

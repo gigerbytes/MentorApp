@@ -1,7 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { Image } from 'react-native'
-import { AppStack, DrawerContent, generateNavOptions } from '../Navigation'
+import { AppStack } from '../navigation'
+import { DrawerContent } from '../navigation/DrawerContent'
+import { generateNavOptions } from '../navigation/helpers'
 
 describe('Navigation', () => {
   describe('Drawer', () => {

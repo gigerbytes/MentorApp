@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { NavWrapper } from '../NavWrapper'
-import { LoginStack, AppStack } from '../Navigation'
+import { LoginStack, AppStack } from '../navigation'
 import Loading from '../Loading'
 import * as store from '../../redux/store'
 

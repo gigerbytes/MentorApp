@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { getHydrationState } from '../redux/store'
-import { LoginStack, AppStack } from './Navigation'
+import { LoginStack, AppStack } from './navigation'
 import Loading from './Loading'
 
 export class NavWrapper extends Component {

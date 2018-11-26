@@ -3,21 +3,21 @@ import { ScrollView, StyleSheet, View, Text } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { addSurveyData } from '../../redux/actions'
+import { addSurveyFamilyMemberData } from '../../redux/actions'
 
 import globalStyles from '../../globalStyles'
 import Button from '../../components/Button'
 import Select from '../../components/Select'
 
 export class FamilyMembersGender extends Component {
-  draft_id = this.props.navigation.getParam('draft_id')
+  draftId = this.props.navigation.getParam('draftId')
   survey = this.props.navigation.getParam('survey')
 
   state = { errorsDetected: [] }
 
   handleClick() {
     this.props.navigation.navigate('FamilyMembersBirthdates', {
-      draft_id: this.draft_id,
+      draftId: this.draftId,
       survey: this.survey
     })
   }
@@ -26,7 +26,7 @@ export class FamilyMembersGender extends Component {
     if (!draft) {
       return
     }
-    return draft.family_data[field]
+    return draft.familyData[field]
   }
 
   detectError = (error, field) => {
@@ -39,17 +39,20 @@ export class FamilyMembersGender extends Component {
     }
   }
 
-  addFamilyMemberGender(gender, list, i) {
-    list[i].gender = gender
-    this.props.addSurveyData(this.draft_id, 'family_data', {
-      familyMembersList: list
+  addFamilyMemberGender(gender, index) {
+    this.props.addSurveyFamilyMemberData({
+      id: this.draftId,
+      index,
+      payload: {
+        gender
+      }
     })
   }
 
   gender = this.survey.surveyPersonalQuestions.filter(item => item.id === 22)[0]
   render() {
     const draft = this.props.drafts.filter(
-      draft => draft.draft_id === this.draft_id
+      draft => draft.draftId === this.draftId
     )[0]
 
     return (
@@ -58,7 +61,7 @@ export class FamilyMembersGender extends Component {
         contentContainerStyle={styles.contentContainer}
       >
         <View style={{ ...globalStyles.container, padding: 0 }}>
-          {draft.family_data.familyMembersList.map((item, i) => (
+          {draft.familyData.familyMembersList.slice(1).map((item, i) => (
             <View key={i}>
               <Text
                 style={{
@@ -72,17 +75,11 @@ export class FamilyMembersGender extends Component {
               </Text>
               <Select
                 field={i.toString()}
-                onChange={text =>
-                  this.addFamilyMemberGender(
-                    text,
-                    draft.family_data.familyMembersList,
-                    i
-                  )
-                }
+                onChange={text => this.addFamilyMemberGender(text, i + 1)}
                 label="Gender"
                 placeholder="Select gender"
                 value={
-                  (this.getFieldValue(draft, 'familyMembersList')[i] || {})
+                  (this.getFieldValue(draft, 'familyMembersList')[i + 1] || {})
                     .gender || ''
                 }
                 detectError={this.detectError}
@@ -115,11 +112,11 @@ const styles = StyleSheet.create({
 FamilyMembersGender.propTypes = {
   drafts: PropTypes.array,
   navigation: PropTypes.object.isRequired,
-  addSurveyData: PropTypes.func.isRequired
+  addSurveyFamilyMemberData: PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = {
-  addSurveyData
+  addSurveyFamilyMemberData
 }
 
 const mapStateToProps = ({ drafts }) => ({

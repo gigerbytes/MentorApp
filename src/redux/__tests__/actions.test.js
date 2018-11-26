@@ -112,7 +112,7 @@ describe('surveys actions', () => {
             headers: { Authorization: `Bearer ${token}` },
             body: JSON.stringify({
               query:
-                'query { surveysByUser { title id surveyPersonalQuestions { id questionText answerType options { text value  } } surveyEconomicQuestions { questionText answerType topic required forFamilyMember options {text value} } surveyStoplightQuestions { questionText dimension id stoplightColors { url value description } required } } }'
+                'query { surveysByUser { title id surveyPersonalQuestions { id questionText answerType options { text value  } } surveyEconomicQuestions { questionText codeName answerType topic required forFamilyMember options {text value} } surveyStoplightQuestions { questionText dimension id stoplightColors { url value description } required } } }'
             })
           },
           commit: { type: action.LOAD_SURVEYS }

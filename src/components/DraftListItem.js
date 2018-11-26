@@ -19,8 +19,8 @@ class DraftListItem extends Component {
             {moment(this.props.item.created).format('MMM, DD YYYY')}
           </Text>
           <Text style={globalStyles.p}>
-            {this.props.item.personal_survey_data.firstName}{' '}
-            {this.props.item.personal_survey_data.lastName}
+            {this.props.item.familyData.familyMembersList[0].firstName}{' '}
+            {this.props.item.familyData.familyMembersList[0].lastName}
           </Text>
         </View>
         <Icon name="navigate-next" size={23} color={colors.lightdark} />

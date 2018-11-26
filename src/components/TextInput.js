@@ -18,7 +18,10 @@ class TextInput extends Component {
 
   onChangeText(text) {
     this.setState({ text })
-    this.props.onChangeText(text, this.props.field)
+  }
+
+  onEndEditing = () => {
+    this.props.onChangeText(this.state.text, this.props.field)
   }
 
   onFocus() {
@@ -132,21 +135,22 @@ class TextInput extends Component {
               : ''
           }
           onChangeText={text => this.onChangeText(text)}
+          onEndEditing={this.onEndEditing}
           inputStyle={{
             ...styles.inputStyle,
             ...styles[status],
+            fontSize: 14,
             paddingTop: !showPlaceholder ? 30 : 10
           }}
           editable={!this.props.readonly}
         >
-          <Text style={{ fontSize: 16, margin: 10 }}>{text}</Text>
+          <Text style={{ fontSize: 14, margin: 10 }}>{text}</Text>
         </FormInput>
-        {status === 'error' &&
-          errorMsg && (
-            <FormValidationMessage style={{ color: colors.red }}>
-              {errorMsg}
-            </FormValidationMessage>
-          )}
+        {status === 'error' && errorMsg && (
+          <FormValidationMessage style={{ color: colors.red }}>
+            {errorMsg}
+          </FormValidationMessage>
+        )}
       </View>
     )
   }
@@ -180,8 +184,7 @@ const styles = StyleSheet.create({
   text: {
     marginBottom: -30,
     marginLeft: 25,
-    zIndex: 100,
-    fontSize: 14
+    zIndex: 100
   }
 })
 

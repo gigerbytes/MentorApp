@@ -13,7 +13,7 @@ const createTestProps = props => ({
         return survey
       } else if (param === 'step') {
         return 0
-      } else if (param === 'draft_id') {
+      } else if (param === 'draftId') {
         return 1
       }
     })

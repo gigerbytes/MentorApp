@@ -8,34 +8,32 @@ import DateInput from '../../components/DateInput'
 
 const createTestProps = props => ({
   navigation: {
-    getParam: jest.fn(param => (param === 'draft_id' ? 4 : null)),
+    getParam: jest.fn(param => (param === 'draftId' ? 4 : null)),
     navigate: jest.fn()
   },
   drafts: [
     {
-      draft_id: 4,
-      survey_id: 1,
-      personal_survey_data: {
-        firstName: 'Jane',
-        lastName: 'Doe',
-        documentNumber: '5468568',
-        email: 'jane@doe.com',
-        phone: '40965035',
-        gender: 'F'
-      },
-      economic_survey_data: {
-        familyCar: 'Yes'
-      },
-      indicator_survey_data: {
-        income: 'GREEN'
-      },
-      family_data: {
-        count_family_members: 2,
-        familyMembersList: [{ firstName: 'Demo', birthDate: 1515708000 }]
+      draftId: 4,
+      surveyId: 1,
+      economicSurveyDataList: [],
+      indicatorSurveyDataList: [],
+      familyData: {
+        countFamilyMembers: 2,
+        familyMembersList: [
+          {
+            firstName: 'Juan',
+            lastName: 'Perez'
+          },
+          {
+            firstName: 'Ana',
+            gender: 'F',
+            birthDate: 1515708000
+          }
+        ]
       }
     }
   ],
-  addSurveyData: jest.fn(),
+  addSurveyFamilyMemberData: jest.fn(),
   ...props
 })
 

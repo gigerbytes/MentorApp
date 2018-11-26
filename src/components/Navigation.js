@@ -25,7 +25,7 @@ import SurveysView from '../screens/Surveys'
 import FamiliesView from '../screens/Families'
 import FamilyView from '../screens/Family'
 import DashboardView from '../screens/Dashboard'
-import Terms from '../screens/lifemap/Terms'
+import TermsView from '../screens/lifemap/Terms'
 import FinalView from '../screens/lifemap/Final'
 import FamilyParticipantView from '../screens/lifemap/FamilyParticipant'
 import FamilyMembersNamesView from '../screens/lifemap/FamilyMembersNames'
@@ -171,14 +171,14 @@ export const generateNavOptions = ({ navigation, headerLeft = true }) => {
 // Reusable object for all screens related to a draft
 const DraftScreens = {
   Terms: {
-    screen: Terms,
+    screen: TermsView,
     navigationOptions: ({ navigation }) => ({
       title: 'Terms & Conditions',
       ...generateNavOptions({ navigation, headerLeft: false })
     })
   },
   Privacy: {
-    screen: Terms,
+    screen: TermsView,
     navigationOptions: ({ navigation }) => ({
       title: 'Privacy Policy',
       ...generateNavOptions({ navigation, headerLeft: false })

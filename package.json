@@ -7,8 +7,8 @@
     "start-ios": "react-native run-ios",
     "start-android": "react-native run-android",
     "test": "jest",
-    "test:coverage": "jest --coverage",
-    "test:watch": "npm test -- --watch"
+    "lint-staged": "lint-staged",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@redux-offline/redux-offline": "^2.4.0",
@@ -48,6 +48,7 @@
     "husky": "^1.1.1",
     "jest": "^23.6.0",
     "jest-enzyme": "^6.1.2",
+    "lint-staged": "^8.1.0",
     "metro-react-native-babel-preset": "0.45.3",
     "mock-async-storage": "^2.0.3",
     "react-dom": "^16.5.2",
@@ -71,8 +72,14 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test"
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.js": [
+      "git add",
+      "jest --bail --findRelatedTests"
+    ]
   },
   "rnpm": {
     "assets": [

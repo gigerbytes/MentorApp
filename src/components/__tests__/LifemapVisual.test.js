@@ -6,7 +6,12 @@ import LifemapVisual from '../LifemapVisual'
 
 const createTestProps = props => ({
   ...props,
-  data: { phone: 1, income: 3, electricity: 2, water: 0 }
+  data: [
+    { key: 'phone', value: 1 },
+    { key: 'income', value: 3 },
+    { key: 'electricity', value: 2 },
+    { key: 'water', value: 0 }
+  ]
 })
 
 describe('LifemapVisual Component', () => {
